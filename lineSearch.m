@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function alpha = lineSearch(x, s, f)
 b=0.5;
 syms x1 x2;
@@ -20,15 +19,4 @@ end
 
 end
     
-    
-||||||| 9b9c7ac
-=======
-function a = lineSearch(x, s, f)
-t=1;
-syms a;
-feval = f(x + (a*s));
-fprime = diff(feval, a);
-a=1;
-while(fprime(a)!=0)
-    
->>>>>>> 6089e2aea8104bc1324349b5f06ea49cd9142aba
+
