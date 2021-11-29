@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 function [x, hist] = SteepestDescent(f, x0, maxSteps)
 hist = zeros(2,maxSteps);
 x = x0';
@@ -20,16 +20,3 @@ for k=1:maxSteps
     x= double(x);
 end
 end
-||||||| 9b9c7ac
-=======
-function x = SteepestDescent(f, x0, maxSteps)
-hist = zeros(2,maxSteps); % History. Contains the point generated at each step.
-x = x0';
-syms x1 x2 a;
-for k=1:maxSteps
-    s = -(gradient(f,[x1,x2]));
-    alpha = linesearch(x, s, f);
-    x= x+(alpha*s);
-end
-end
->>>>>>> 6089e2aea8104bc1324349b5f06ea49cd9142aba
