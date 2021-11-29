@@ -18,5 +18,3 @@ while(ft>=fgoal && k<10)
 end
 
 end
-    
-
