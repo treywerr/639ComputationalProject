@@ -135,7 +135,7 @@ hold off;
 %% Bukin
 figure("name", "Sixth Bukin function")
 % -Steepest Descent-
-[x,hist] = SteepestDescent(f5,[-14 -2],20);
+[x,hist] = SteepestDescent(f5,[-14 -2],100);
 subplot(2,3,2);
 hold on;
 fcontour(f5,[-15 -5 -3 3])
