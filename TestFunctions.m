@@ -74,6 +74,13 @@ hold off;
 % plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
 % hold off;
 % -Conjugate gradient-
+% [x,hist] = ConjugateGradient(f1,[1.5 1],20);
+% subplot(2,3,5);
+% hold on;
+% fcontour(f1, [-5 10])
+% title("Conjugate Gradient Method");
+% plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
+% hold off;
 
 %% Camel
 figure("name", "Three-hump camel function")
@@ -135,7 +142,7 @@ hold off;
 %% Bukin
 figure("name", "Sixth Bukin function")
 % -Steepest Descent-
-[x,hist] = SteepestDescent(f5,[-14 -2],20);
+[x,hist] = SteepestDescent(f5,[-14 -2],100);
 subplot(2,3,2);
 hold on;
 fcontour(f5,[-15 -5 -3 3])
