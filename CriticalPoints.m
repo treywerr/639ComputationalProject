@@ -1,5 +1,5 @@
 %% Variable declarations
-n = 6;
+n = 5;
 syms f(x1,x2) k;
 % f(x1,x2) = 2*x1.^2 - 1.05*x1.^4 + x1.^6/6 + x1.*x2 + x2.^2;
 % f(x1,x2) = 100*(x2 - x1.^2).^2 + (x1 - 1).^2;
@@ -65,8 +65,7 @@ function [x] = Newton(x, f, J, tol)
         A = subs(J, [x1,x2], [x(1),x(2)]);
         B = subs(f, [x1,x2], [x(1),x(2)]);
         [s,r] = linsolve(double(A),-1*double(B)); % output r only used to suppress ill-condiitoned warning
-        alpha = lineSearch(x,s,f);
-        x = x + alpha*s;
+        x = x + s;
         if (abs(double(f(x(1),x(2)))) < tol*ones(2,1))
             return;
         end
