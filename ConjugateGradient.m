@@ -9,6 +9,7 @@ function [min, hist] = ConjugateGradient(f, init, maxStep)
     min = min + s.*alpha;
     g1 = double(subs(grad, x, min));
     beta = (g1'*g1)/(g'*g);
-    s = -g1 + beta*s;
+    g = g1;
+    s = -g + beta*s;
   end
 
