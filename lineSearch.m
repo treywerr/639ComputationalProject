@@ -1,6 +1,6 @@
 function alpha = lineSearch(x, s, f)
-b=0.5;
-t=0.25;
+b=0.9;
+t=0.4;
 syms x1 x2;
 xc = x;
 alpha = 1;
