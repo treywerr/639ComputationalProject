@@ -7,8 +7,9 @@ syms f(x1,x2) k;
 % f(x1,x2) = -sin(x1).*sin(x1.^2/pi).^(2*k) - sin(x2).*sin(2*x2.^2/pi).^(2*k);
 % f = subs(f,k,2);
 % f(x1,x2) = 100*sqrt(sqrt((x2 - 0.01*x1.^2)^2)) + 0.01*sqrt((x1+10)^2);
-f(x1,x2) = 100*sqrt(abs(x2 - 0.01*x1.^2)) + 0.01*abs(x1+10);
-interval = [-15 -5 -3 3];
+% f(x1,x2) = 100*sqrt(abs(x2 - 0.01*x1.^2)) + 0.01*abs(x1+10);
+% interval = [-15 -5 -3 3];
+interval = [0 pi 0 pi];
 X = linspace(interval(1),interval(2),n);
 Y = linspace(interval(3),interval(4),n);
 M = NaN*ones(2,n^2);
@@ -50,6 +51,7 @@ Saddle
 Other
 
 %% plot critical points
+figure("name", "Critical Points");
 hold on;
 fcontour(f, interval)
 plot(Min(1,:),Min(2,:),'r_')

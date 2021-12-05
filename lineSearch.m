@@ -1,16 +1,16 @@
 function alpha = lineSearch(x, s, f)
-b=0.9;
-t=0.4;
+b=0.5;
+t=0.25;
 syms x1 x2;
 xc = x;
 alpha = 1;
 xt = xc+alpha*s;
-xt = double(xt);
-s = double(s);
-ft = f(xt(1),xt(2));
+% xt = double(xt);
+% s = double(s);
+ft = subs(f, [x1,x2],[xt(1),xt(2)]);
 grad(x1, x2) = gradient(f, [x1 x2]);
 g = double(grad(xc(1), xc(2)));
-fgoal = f(xc(1), xc(2))+(t*alpha*(g'*s));
+fgoal = f(xc(1), xc(2)) + (t*alpha*(g'*s));
 k=1;
 while(ft>=fgoal && k<20)
     k=k+1;

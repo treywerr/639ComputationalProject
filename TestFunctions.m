@@ -41,56 +41,65 @@ title("Sixth Bukin Function");
 
 %% Rosenbrock
 figure("name", "Rosenbrock function")
+% Critical points
+Min = [1 1]';
 % -Nelder-Mead-
-% [x,hist] = NelderMead(f1,[1.5 1],20);
+% [x,hist] = NelderMead(f1,[4 4],20);
 % subplot(2,3,1);
 % hold on;
 % fcontour(f1, [-5 10])
 % title("Nelder Mead Method");
-% plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
+% plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+% plot(Min(1,:),Min(2,:),'r_')
 % hold off;
 % -Steepest descent-
-[x,hist] = SteepestDescent(f1,[1.5 1],20);
+[x,hist] = SteepestDescent(f1,[4 4],20);
 subplot(2,3,2);
 hold on;
 fcontour(f1, [-5 10])
 title("Steepest Descent Method");
-plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
 hold off;
 % -Newton-
-[x,hist] = Newton(f1,[1.5 1],20);
+[x,hist] = Newton(f1,[4 4],20);
 subplot(2,3,3);
 hold on;
 fcontour(f1, [-5 10])
 title("Newton's Method");
-plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo') % Plot convergence path as a solid black line and final point as an open blue circle.
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*') % Plot convergence path as a solid black line and final point as an open blue asterisk.
+plot(Min(1,:),Min(2,:),'r_')
 hold off;
 % -Quasi-Newton-
-% [x,hist] = QuasiNewton(f1,eye(2),[1.5 1],20);
-% subplot(2,3,4);
-% hold on;
-% fcontour(f1, [-5 10])
-% title("Quasi-Newton Method");
-% plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
-% hold off;
+[x,hist] = QuasiNewton([4 4], eye(2),f1,20);
+subplot(2,3,4);
+hold on;
+fcontour(f1, [-5 10])
+title("Quasi-Newton Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
+hold off;
 % -Conjugate gradient-
-% [x,hist] = ConjugateGradient(f1,[1.5 1],20);
-% subplot(2,3,5);
-% hold on;
-% fcontour(f1, [-5 10])
-% title("Conjugate Gradient Method");
-% plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
-% hold off;
+[x,hist] = ConjugateGradient(f1,[4 4],20);
+subplot(2,3,5);
+hold on;
+fcontour(f1, [-5 10])
+title("Conjugate Gradient Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
+hold off;
 
 %% Camel
 figure("name", "Three-hump camel function")
+Min = [-1.7476 0.8738; 0 0; 1.7476 -0.8738]';
 % -Steepest Descent-
 [x,hist] = SteepestDescent(f2,[2 2],20);
 subplot(2,3,2);
 hold on;
 fcontour(f2, [-5 5])
 title("Steepest Descent Method");
-plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
 hold off;
 % -Newton-
 [x,hist] = Newton(f2,[2 2],20);
@@ -98,18 +107,43 @@ subplot(2,3,3);
 hold on;
 fcontour(f2,[-5 5])
 title("Newton's Method");
-plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
+hold off;
+% -Quasi-Newton-
+[x,hist] = QuasiNewton([2 2],eye(2),f2,20);
+subplot(2,3,4);
+hold on;
+fcontour(f2, [-5 5])
+title("Quasi-Newton Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
+hold off;
+% -Conjugate gradient-
+[x,hist] = ConjugateGradient(f2,[2 2],20);
+subplot(2,3,5);
+hold on;
+fcontour(f2, [-5 5])
+title("Conjugate Gradient Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
 hold off;
 
 %% Michalewicz
 figure("name", "Michalewicz function")
+Min = [2.1376 1.5708]';
+Max = [0.3013 0.2953; 0.3013 2.2285; 0.4214 2.2262]';
+Saddle = [0.3944 1.5708; 0.4214 1.5708; 2.1376 0.2953; 2.1376 2.2285]';
 % -Steepest Descent-
 [x,hist] = SteepestDescent(f3,[2 2],20);
 subplot(2,3,2);
 hold on;
 fcontour(f3, [0 pi])
 title("Steepest Descent Method");
-plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
+plot(Max(1,:),Max(2,:),'g+')
+plot(Saddle(1,:),Saddle(2,:),'bo')
 hold off;
 % -Newton-
 [x,hist] = Newton(f3,[2 2],20);
@@ -117,18 +151,45 @@ subplot(2,3,3);
 hold on;
 fcontour(f3,[0 pi])
 title("Newton's Method");
-plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
+plot(Max(1,:),Max(2,:),'g+')
+plot(Saddle(1,:),Saddle(2,:),'bo')
+hold off;
+% -Quasi-Newton-
+[x,hist] = QuasiNewton([2 2],eye(2),f3,20);
+subplot(2,3,4);
+hold on;
+fcontour(f3, [0 pi])
+title("Quasi-Newton Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
+plot(Max(1,:),Max(2,:),'g+')
+plot(Saddle(1,:),Saddle(2,:),'bo')
+hold off;
+% -Conjugate gradient-
+[x,hist] = ConjugateGradient(f3,[2 2],20);
+subplot(2,3,5);
+hold on;
+fcontour(f3, [0 pi])
+title("Conjugate Gradient Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
+plot(Max(1,:),Max(2,:),'g+')
+plot(Saddle(1,:),Saddle(2,:),'bo')
 hold off;
 
 %% Ackley
 figure("name", "Ackley function")
+Max = [-32.5020 -16.5010; -32.5020 16.5010; -32.5004 32.5004; -16.5101 -16.5101; -16.5101 16.5101; -16.5010 -32.5020; -16.5010 -32.5020; 16.5010 -32.5020; 16.5010 32.5020; 16.5101 -16.5101; 16.5101 16.5101; 32.5004 -32.5004; 32.5004 32.5004; 32.5020 -16.5010; 32.5020 16.5010]';
 % -Steepest Descent-
 [x,hist] = SteepestDescent(f4,[7 7],20);
 subplot(2,3,2);
 hold on;
 fcontour(f4, [-32.768 32.768])
 title("Steepest Descent Method");
-plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Max(1,:),Max(2,:),'g+')
 hold off;
 % -Newton-
 [x,hist] = Newton(f4,[7 7],20);
@@ -136,7 +197,8 @@ subplot(2,3,3);
 hold on;
 fcontour(f4,[-32.768 32.768])
 title("Newton's Method");
-plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Max(1,:),Max(2,:),'g+')
 hold off;
 
 %% Bukin
@@ -147,7 +209,7 @@ subplot(2,3,2);
 hold on;
 fcontour(f5,[-15 -5 -3 3])
 title("Steepest Descent Method");
-plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
 hold off;
 % -Newton-
 [x,hist] = Newton(f5,[-14 -2],20);
@@ -156,5 +218,5 @@ subplot(2,3,3);
 hold on;
 fcontour(f5,[-15 -5 -3 3])
 title("Newton's Method");
-plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'bo')
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
 hold off;
