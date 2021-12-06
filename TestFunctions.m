@@ -3,6 +3,7 @@ figure("name", "3D Plots")
 
 % Rosenbrock function
 syms f1(x1,x2);
+% f1([x1 x2]) = 100*(x2 - x1.^2).^2 + (x1 - 1).^2;
 f1(x1,x2) = 100*(x2 - x1.^2).^2 + (x1 - 1).^2;
 subplot(2,3,1);
 fsurf(f1, [-5 10])
