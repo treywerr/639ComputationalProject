@@ -6,12 +6,13 @@ size = length(x);
 n=size-1;
 sum = 0;
 k=1;
+tol=0.001;
 %set coefficients to standard values
 alpha = 1;
 gamma = 2;
 rho = 0.5;
 sigma = 0.5;
-while(norm < tol && k<maxSteps)
+while(abs(f(x(k))-(f(x(k+1)))) > tol && k<maxSteps)
     for j=1:n+1
         sum = sum + x(j);
     end
