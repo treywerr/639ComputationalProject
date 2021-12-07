@@ -1,12 +1,16 @@
 function [min, hist] = ConjugateGradient(f, init, maxStep)
   min = init';
   syms x [length(init), 1];
-  hist = zeros(maxStep, length(init));
+  hist = NaN*ones(length(init), maxStep);
   grad = gradient(f, x);
   g = double(subs(grad, x, min));
   s = -g;
   for k = 1:maxStep
-    hist(k,:) = min';
+    hist(:,k) = min;
+    % check for termination
+    if norm(g) < 0.0001
+        return;
+    end
     alpha = lineSearch(min, s, f);
     min = min + s.*alpha;
     g1 = double(subs(grad, x, min));

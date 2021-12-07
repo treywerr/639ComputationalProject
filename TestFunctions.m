@@ -3,7 +3,6 @@ figure("name", "3D Plots")
 
 % Rosenbrock function
 syms f1(x1,x2);
-% f1([x1 x2]) = 100*(x2 - x1.^2).^2 + (x1 - 1).^2;
 f1(x1,x2) = 100*(x2 - x1.^2).^2 + (x1 - 1).^2;
 subplot(2,3,1);
 fsurf(f1, [-5 10])
@@ -42,19 +41,20 @@ title("Sixth Bukin Function");
 
 %% Rosenbrock
 figure("name", "Rosenbrock function")
+x0 = [2 7];
 % Critical points
 Min = [1 1]';
 % -Nelder-Mead-
-% [x,hist] = NelderMead(f1,[4 4],20);
-% subplot(2,3,1);
-% hold on;
-% fcontour(f1, [-5 10])
-% title("Nelder Mead Method");
-% plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
-% plot(Min(1,:),Min(2,:),'r_')
-% hold off;
+[x,hist] = NelderMead(f1,x0,20);
+subplot(2,3,1);
+hold on;
+fcontour(f1, [-5 10])
+title("Nelder Mead Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
+hold off;
 % -Steepest descent-
-[x,hist] = SteepestDescent(f1,[4 4],20);
+[x,hist] = SteepestDescent(f1,x0,20);
 subplot(2,3,2);
 hold on;
 fcontour(f1, [-5 10])
@@ -63,7 +63,7 @@ plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
 plot(Min(1,:),Min(2,:),'r_')
 hold off;
 % -Newton-
-[x,hist] = Newton(f1,[4 4],20);
+[x,hist] = Newton(f1,x0,20);
 subplot(2,3,3);
 hold on;
 fcontour(f1, [-5 10])
@@ -72,7 +72,7 @@ plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*') % Plot convergence path as a soli
 plot(Min(1,:),Min(2,:),'r_')
 hold off;
 % -Quasi-Newton-
-[x,hist] = QuasiNewton([4 4], eye(2),f1,20);
+[x,hist] = QuasiNewton(x0, eye(2),f1,20);
 subplot(2,3,4);
 hold on;
 fcontour(f1, [-5 10])
@@ -81,7 +81,7 @@ plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
 plot(Min(1,:),Min(2,:),'r_')
 hold off;
 % -Conjugate gradient-
-[x,hist] = ConjugateGradient(f1,[4 4],20);
+[x,hist] = ConjugateGradient(f1,x0,20);
 subplot(2,3,5);
 hold on;
 fcontour(f1, [-5 10])
@@ -92,9 +92,19 @@ hold off;
 
 %% Camel
 figure("name", "Three-hump camel function")
+x0 = [2 2];
 Min = [-1.7476 0.8738; 0 0; 1.7476 -0.8738]';
+% -Nelder-Mead-
+[x,hist] = NelderMead(f2,x0,20);
+subplot(2,3,1);
+hold on;
+fcontour(f2, [-5 5])
+title("Nelder Mead Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
+hold off;
 % -Steepest Descent-
-[x,hist] = SteepestDescent(f2,[2 2],20);
+[x,hist] = SteepestDescent(f2,x0,20);
 subplot(2,3,2);
 hold on;
 fcontour(f2, [-5 5])
@@ -103,7 +113,7 @@ plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
 plot(Min(1,:),Min(2,:),'r_')
 hold off;
 % -Newton-
-[x,hist] = Newton(f2,[2 2],20);
+[x,hist] = Newton(f2,x0,20);
 subplot(2,3,3);
 hold on;
 fcontour(f2,[-5 5])
@@ -112,7 +122,7 @@ plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
 plot(Min(1,:),Min(2,:),'r_')
 hold off;
 % -Quasi-Newton-
-[x,hist] = QuasiNewton([2 2],eye(2),f2,20);
+[x,hist] = QuasiNewton(x0,eye(2),f2,20);
 subplot(2,3,4);
 hold on;
 fcontour(f2, [-5 5])
@@ -121,7 +131,7 @@ plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
 plot(Min(1,:),Min(2,:),'r_')
 hold off;
 % -Conjugate gradient-
-[x,hist] = ConjugateGradient(f2,[2 2],20);
+[x,hist] = ConjugateGradient(f2,x0,20);
 subplot(2,3,5);
 hold on;
 fcontour(f2, [-5 5])
@@ -135,6 +145,17 @@ figure("name", "Michalewicz function")
 Min = [2.1376 1.5708]';
 Max = [0.3013 0.2953; 0.3013 2.2285; 0.4214 2.2262]';
 Saddle = [0.3944 1.5708; 0.4214 1.5708; 2.1376 0.2953; 2.1376 2.2285]';
+% -Nelder-Mead-
+[x,hist] = NelderMead(f3,[2 2],20);
+subplot(2,3,1);
+hold on;
+fcontour(f3, [0 pi])
+title("Nelder Mead Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Min(1,:),Min(2,:),'r_')
+plot(Max(1,:),Max(2,:),'g+')
+plot(Saddle(1,:),Saddle(2,:),'bo')
+hold off;
 % -Steepest Descent-
 [x,hist] = SteepestDescent(f3,[2 2],20);
 subplot(2,3,2);
@@ -183,6 +204,15 @@ hold off;
 %% Ackley
 figure("name", "Ackley function")
 Max = [-32.5020 -16.5010; -32.5020 16.5010; -32.5004 32.5004; -16.5101 -16.5101; -16.5101 16.5101; -16.5010 -32.5020; -16.5010 -32.5020; 16.5010 -32.5020; 16.5010 32.5020; 16.5101 -16.5101; 16.5101 16.5101; 32.5004 -32.5004; 32.5004 32.5004; 32.5020 -16.5010; 32.5020 16.5010]';
+% -Nelder-Mead-
+[x,hist] = NelderMead(f4,[7 7],20);
+subplot(2,3,1);
+hold on;
+fcontour(f4, [-32.768 32.768])
+title("Nelder Mead Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Max(1,:),Max(2,:),'g+')
+hold off;
 % -Steepest Descent-
 [x,hist] = SteepestDescent(f4,[7 7],20);
 subplot(2,3,2);
@@ -201,11 +231,38 @@ title("Newton's Method");
 plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
 plot(Max(1,:),Max(2,:),'g+')
 hold off;
+% -Quasi-Newton-
+[x,hist] = QuasiNewton([7 7],eye(2),f4,20);
+subplot(2,3,4);
+hold on;
+fcontour(f4, [-32.768 32.768])
+title("Quasi-Newton Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Max(1,:),Max(2,:),'g+')
+hold off;
+% -Conjugate gradient-
+[x,hist] = ConjugateGradient(f4,[7 7],20);
+subplot(2,3,5);
+hold on;
+fcontour(f4, [-32.768 32.768])
+title("Conjugate Gradient Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+plot(Max(1,:),Max(2,:),'g+')
+hold off;
 
 %% Bukin
 figure("name", "Sixth Bukin function")
+x0 = [-10 -1];
+% -Nelder-Mead-
+[x,hist] = NelderMead(f5,x0,20);
+subplot(2,3,1);
+hold on;
+fcontour(f5, [-15 -5 -3 3])
+title("Nelder Mead Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+hold off;
 % -Steepest Descent-
-[x,hist] = SteepestDescent(f5,[-14 -2],100);
+[x,hist] = SteepestDescent(f5,x0,20);
 subplot(2,3,2);
 hold on;
 fcontour(f5,[-15 -5 -3 3])
@@ -213,11 +270,26 @@ title("Steepest Descent Method");
 plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
 hold off;
 % -Newton-
-[x,hist] = Newton(f5,[-14 -2],20);
-% Currently has issue where hessian becomes singular. Likely due to absolute value in function.
+[x,hist] = Newton(f5,x0,20);
 subplot(2,3,3);
 hold on;
 fcontour(f5,[-15 -5 -3 3])
 title("Newton's Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+hold off;
+% -Quasi-Newton-
+[x,hist] = QuasiNewton(x0,eye(2),f5,20);
+subplot(2,3,4);
+hold on;
+fcontour(f5, [-15 -5 -3 3])
+title("Quasi-Newton Method");
+plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
+hold off;
+% -Conjugate gradient-
+[x,hist] = ConjugateGradient(f5,x0,20);
+subplot(2,3,5);
+hold on;
+fcontour(f5, [-15 -5 -3 3])
+title("Conjugate Gradient Method");
 plot(hist(1,:),hist(2,:),'k-', x(1),x(2),'b*')
 hold off;
