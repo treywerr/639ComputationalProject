@@ -32,13 +32,13 @@ for k=1:maxSteps
     % order simplex
     fevals = zeros(1,n+1); % determine function values at all simplex points
     for i=1:n+1
-	if isSymFun
-	  fevals(i) = double(subs(f, x, S(:,i)));
-	else
-	  fevals(i) = f(S(:,i));
-	end
+        if isSymFun
+            fevals(i) = double(subs(f, x, S(:,i)));
+        else
+            fevals(i) = f(S(:,i));
+        end
     end
-
+    
     for i=2:n+1 % begin insertion sort
         temp = S(:,i);
         j = i-1;
@@ -52,39 +52,42 @@ for k=1:maxSteps
     % check for termination
     min = S(:,1);
     if isSymFun
-      f_x1 = double(subs(f, x, S(:,1)));
+        f_x1 = double(subs(f, x, S(:,1)));
     else
-      f_x1 = f(min);
+        f_x1 = f(min);
     end
-
+    
     if k > 1
-	if std(fevals) < tol
+        if std(fevals) < tol
             return;
         end
     end
-
+    
     x0 = mean(S(:,1:n),2); % centroid
     
     %reflection point
     xr = x0 + alpha*(x0-S(:,n+1));
-    if isSymFun 
-      f_xr = double(subs(f, x, xr));
-      f_xn = double(subs(f, x, S(:,n)));
+    if isSymFun
+        f_xr = double(subs(f, x, xr));
+        f_xn = double(subs(f, x, S(:,n)));
     else
-      f_xr = f(xr);
-      f_xn = f(S(:,n));
+        f_xr = f(xr);
+        f_xn = f(S(:,n));
     end
+    
     if(f_xr >= f_x1 && f_xr < f_xn)
         S(:,n+1)=xr;
         continue;
     elseif(f_xr < f_x1) %expansion
         xe = x0 + gamma*(xr-x0); %expanded point
-	if isSymFun
-	    extend = double(subs(f, x, xe)) < f_xr;
-	else
-	    extend = f(xe) < f_xr;
-	end
-	if extend
+        
+        if isSymFun
+            extend = double(subs(f, x, xe)) < f_xr;
+        else
+            extend = f(xe) < f_xr;
+        end
+        
+        if extend
             S(:,n+1)=xe;
             continue;
         else
@@ -94,12 +97,13 @@ for k=1:maxSteps
     else %contraction
         xc = x0 + rho*(S(:,n+1)-x0); %contracted point
         
-	if isSymFun
-	    contract = double(subs(f,x,xc)) < double(subs(f,x,S(:,n+1)));
-	else
-	    contract = f(xc) < f(S(:, n+1));
-	end
-	if contract
+        if isSymFun
+            contract = double(subs(f,x,xc)) < double(subs(f,x,S(:,n+1)));
+        else
+            contract = f(xc) < f(S(:, n+1));
+        end
+        
+        if contract
             S(:,n+1)=xc;
             continue;
         else %shrink
