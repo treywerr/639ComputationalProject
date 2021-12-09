@@ -11,7 +11,7 @@ function [min,hist] = Newton(f,initial,maxSteps)
         A = double(subs(hess, x, min));
         B = double(subs(grad, x, min));
         % check for termination
-        if norm(B) < 0.0001
+        if norm(B) < 10^-6
             return;
         end
         % Newton Step
