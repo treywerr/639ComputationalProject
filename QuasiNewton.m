@@ -1,15 +1,15 @@
-function [x, hist] = QuasiNewton(x0, B0, f, maxSteps)
-hist = NaN*ones(2, maxSteps);
-x = x0'; % initial guess
-syms x1 x2;
+function [min, hist] = QuasiNewton(x0, B0, f, maxSteps)
+hist = NaN*ones(length(x0), maxSteps);
+min = x0'; % initial guess
+syms x [length(min), 1];
 B = B0; %initial Hessian, usually I
-grad = gradient(f, [x1, x2]);
+grad = gradient(f, x);
 for k=1:maxSteps
     
     % Store x_k
-    hist(:,k) = x;
+    hist(:,k) = min;
     %sub values into gradient
-    ngrad = -1*double(subs(grad, [x1, x2], [x(1), x(2)]));
+    ngrad = -1*double(subs(grad, x, min));
     % check for termination
     if (norm(ngrad) < 0.0001)
         return;
@@ -17,8 +17,8 @@ for k=1:maxSteps
     %compute quasi-Newton Step
     [s,r] = linsolve(B,ngrad);
     %update solution
-    x = x + s;
-    newgrad = double(subs(grad, [x1, x2], [x(1), x(2)]));
+    min = min + s;
+    newgrad = double(subs(grad, x, min));
     y = newgrad + ngrad; 
     %update hessian approx
     B = B + ((y*y')/(y'*s)) - ((B*(s*s')*B)/(s'*B*s));

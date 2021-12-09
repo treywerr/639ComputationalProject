@@ -1,23 +1,21 @@
-function alpha = lineSearch(x, s, f)
+function alpha = lineSearch(init, s, f)
 b=0.5;
 t=0.25;
-syms x1 x2;
-xc = x;
+syms x [length(init), 1];
+xc = init;
 alpha = 1;
 xt = xc+alpha*s;
-% xt = double(xt);
-% s = double(s);
-ft = subs(f, [x1,x2],[xt(1),xt(2)]);
-grad(x1, x2) = gradient(f, [x1 x2]);
-g = double(grad(xc(1), xc(2)));
-fgoal = f(xc(1), xc(2)) + (t*alpha*(g'*s));
+ft = subs(f, x, xt);
+grad = gradient(f, x);
+g = double(subs(grad, x, xc));
+fgoal = (subs(f, x, xc)) + (t*alpha*(g'*s));
 k=1;
 while(ft>=fgoal && k<20)
     k=k+1;
     alpha = b*alpha;
     xt = xc+(alpha*s);
-    ft = double(f(xt(1), xt(2)));
-    fgoal = double(f(xc(1), xc(2)))+(t*alpha*(g'*s));
+    ft = double(subs(f, x, xt));
+    fgoal = double(subs(f, x, xc))+(t*alpha*(g'*s));
 end
 
 end
